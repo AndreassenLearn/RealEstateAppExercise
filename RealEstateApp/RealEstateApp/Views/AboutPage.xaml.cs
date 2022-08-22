@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace RealEstateApp
+namespace RealEstateApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuPage : ContentPage
+    public partial class AboutPage : ContentPage
     {
-        public MenuPage()
+        public AboutPage()
         {
             InitializeComponent();
         }

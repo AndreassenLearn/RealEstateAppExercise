@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:fa="clr-namespace:FontAwesome"
              mc:Ignorable="d"
-             x:Class="RealEstateApp.PropertyDetailPage"
+             x:Class="RealEstateApp.Views.PropertyDetailPage"
              Title="{Binding Property.Address}">
     
     <ContentPage.ToolbarItems>

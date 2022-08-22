@@ -6,7 +6,7 @@
              xmlns:converters="clr-namespace:RealEstateApp.Converters"
              xmlns:fa="clr-namespace:FontAwesome"
              mc:Ignorable="d"
-             x:Class="RealEstateApp.AddEditPropertyPage"
+             x:Class="RealEstateApp.Views.AddEditPropertyPage"
              Title="{Binding Title}">
 
     <ContentPage.ToolbarItems>

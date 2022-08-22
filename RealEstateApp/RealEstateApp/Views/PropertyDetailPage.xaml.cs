@@ -5,7 +5,7 @@ using TinyIoC;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace RealEstateApp
+namespace RealEstateApp.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PropertyDetailPage : ContentPage
