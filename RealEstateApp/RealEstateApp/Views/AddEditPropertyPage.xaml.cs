@@ -1,8 +1,11 @@
 ﻿using RealEstateApp.Models;
 using RealEstateApp.Services;
+using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -101,5 +104,31 @@ namespace RealEstateApp.Views
         {
             await Navigation.PopToRootAsync();
         }
+
+    private async void MapPinButton_Clicked(object sender, System.EventArgs e)
+    {
+      try
+      {
+        var location = await Geolocation.GetLocationAsync();
+
+        if (location != null)
+        {
+          Property.Latitude = location.Latitude;
+          Property.Longitude = location.Longitude;
+        }
+      }
+      catch (FeatureNotSupportedException ex)
+      {
+      }
+      catch (FeatureNotEnabledException ex)
+      {
+      }
+      catch (PermissionException ex)
+      {
+      }
+      catch (Exception ex)
+      {
+      }
     }
+  }
 }
