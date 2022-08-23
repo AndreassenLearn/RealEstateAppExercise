@@ -61,6 +61,7 @@
                     Text="{Static fa:IconFont.Home}"
                     Grid.Column="3" 
                     VerticalOptions="Center"
+                    IsEnabled="{Binding HasInternetConnection}"
                     Clicked="HomeLocationButton_Clicked"/>
           </Grid>
 

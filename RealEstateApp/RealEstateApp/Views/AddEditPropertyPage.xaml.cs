@@ -52,6 +52,7 @@ namespace RealEstateApp.Views
     public string StatusMessage { get; set; }
 
     public Color StatusColor { get; set; } = Color.White;
+    public bool HasInternetConnection { get; set; }
     #endregion
 
     public AddEditPropertyPage(Property property = null)
@@ -100,6 +101,15 @@ namespace RealEstateApp.Views
       return true;
     }
 
+    protected override void OnAppearing()
+    {
+      base.OnAppearing();
+
+      HasInternetConnection = (Connectivity.NetworkAccess == NetworkAccess.Internet);
+
+      DisplayAlert("Attention", "No internet connection.", "OK");
+    }
+
     private async void CancelSave_Clicked(object sender, System.EventArgs e)
     {
       await Navigation.PopToRootAsync();
@@ -118,12 +128,15 @@ namespace RealEstateApp.Views
           Property.Latitude = location.Latitude;
           Property.Longitude = location.Longitude;
 
-          // Set address.
-          var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
-          var placemark = placemarks?.FirstOrDefault();
-          if (placemarks != null)
+          // Set address, if connected to the internet.
+          if (HasInternetConnection)
           {
-            Property.Address = $"{placemark.Thoroughfare} {placemark.FeatureName}, {placemark.PostalCode} {placemark.Locality}, {placemark.CountryName}";
+            var placemarks = await Geocoding.GetPlacemarksAsync(location.Latitude, location.Longitude);
+            var placemark = placemarks?.FirstOrDefault();
+            if (placemark != null)
+            {
+              Property.Address = $"{placemark.Thoroughfare} {placemark.FeatureName}, {placemark.PostalCode} {placemark.Locality}, {placemark.CountryName}";
+            }
           }
         }
       }
