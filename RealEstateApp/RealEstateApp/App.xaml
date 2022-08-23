@@ -5,15 +5,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="RealEstateApp.App">
-    <Application.Resources>
-        <ResourceDictionary>
-            <!--  Global Styles  -->
-            <Color x:Key="NavigationPrimary">#2196F3</Color>
-            <Color x:Key="WhiteColor">#FFFFFF</Color>
-            <Style TargetType="NavigationPage">
-                <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
-                <Setter Property="BarTextColor" Value="White" />
-            </Style>
-        </ResourceDictionary>
-    </Application.Resources>
+  <Application.Resources>
+    <ResourceDictionary>
+      <!--  Global Styles  -->
+      <Color x:Key="NavigationPrimary">#2196F3</Color>
+      <Color x:Key="WhiteColor">#FFFFFF</Color>
+      <Color x:Key="LightGrayColor">#D3D3D3</Color>
+      <Color x:Key="GrayColor">#808080</Color>
+      <Style TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor" Value="{StaticResource NavigationPrimary}" />
+        <Setter Property="BarTextColor" Value="{StaticResource WhiteColor}" />
+      </Style>
+      <Style TargetType="Slider">
+        <Setter Property="ThumbColor" Value="{StaticResource NavigationPrimary}" />
+        <Setter Property="MinimumTrackColor" Value="{StaticResource GrayColor}" />
+        <Setter Property="MaximumTrackColor" Value="{StaticResource LightGrayColor}" />
+      </Style>
+    </ResourceDictionary>
+  </Application.Resources>
 </Application>
+  

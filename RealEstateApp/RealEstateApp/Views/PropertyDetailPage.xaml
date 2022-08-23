@@ -4,114 +4,151 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:fa="clr-namespace:FontAwesome"
+             xmlns:converters="clr-namespace:RealEstateApp.Converters"
              mc:Ignorable="d"
              x:Class="RealEstateApp.Views.PropertyDetailPage"
              Title="{Binding Property.Address}">
-    
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="EditProperty_Clicked"  Text="Edit" />
-    </ContentPage.ToolbarItems>
 
-    <ScrollView VerticalOptions="FillAndExpand">
-        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
-              Padding="15">
-            <Image
+  <ContentPage.ToolbarItems>
+    <ToolbarItem Clicked="EditProperty_Clicked"  Text="Edit" />
+  </ContentPage.ToolbarItems>
+
+  <ScrollView VerticalOptions="FillAndExpand">
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+          Padding="15">
+      <Image Grid.Row="0"
+             Margin="-10,-10,-10,0"
+             Aspect="AspectFill"
+             HeightRequest="225"
+             Source="{Binding Property.MainImageUrl}" />
+      <Label Grid.Row="1"
+             FontAttributes="Bold"
+             FontSize="16"
+             LineBreakMode="NoWrap"
+             Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
+      <Label Grid.Row="2"
+             FontSize="16"
+             LineBreakMode="NoWrap"
+             Text="{Binding Property.Address}" />
+      <Grid Grid.Row="3"
+            RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
+        <Label Grid.Column="0"
+               FontSize="16"
+               FontFamily="FA-solid"
+               Text="{Static fa:IconFont.Bed}"
+               VerticalOptions="Center" />
+        <Label Grid.Column="1"
+               FontSize="16"
+               Text="{Binding Property.Beds}" />
+        <Label Grid.Column="2"
+               FontSize="16"
+               FontFamily="FA-solid"
+               Text="{Static fa:IconFont.Bath}"
+               VerticalOptions="Center" />
+        <Label Grid.Column="3"
+               FontSize="16"
+               Text="{Binding Property.Baths}" />
+        <Label Grid.Column="4"
+               FontSize="16"
+               FontFamily="FA-solid"
+               Text="{Static fa:IconFont.Parking}"
+               VerticalOptions="Center" />
+        <Label Grid.Column="5"
+               FontSize="16"
+               Text="{Binding Property.Parking}" />
+      </Grid>
+      <Label Grid.Row="4"
+             FontSize="14"
+             Text="{Binding Property.LandSize, StringFormat='Land size: {0} &#x33a1;'}" />
+      <Label Grid.Row="5"
+             Margin="0,20,0,0"
+             FontAttributes="Bold"
+             FontSize="14"
+             Text="Description:" />
+      <Label Grid.Row="6"
+             Margin="0,0,0,20"
+             FontSize="14"
+             Text="{Binding Property.Description}" />
+      <Grid Grid.Row="7"
+            ColumnDefinitions="*, auto, 2*"
+            RowDefinitions="auto, auto">
+        <!--The two following buttons use the HeightRequest attribute to take heights of 0 or -1 (for default value).
+        This effectively hides them and allow for other elements (e.g. another button) to be shown in place of the "hidden" element.-->
+        <Button FontFamily="FA-solid"
+                Text="{Static fa:IconFont.Play}"
+                Grid.Column="0"
                 Grid.Row="0"
-                Margin="-10,-10,-10,0"
-                Aspect="AspectFill"
-                HeightRequest="225"
-                Source="{Binding Property.MainImageUrl}" />
-            <Label
+                Grid.RowSpan="2"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Clicked="TextToSpeechPlay_Clicked"
+                HeightRequest="{Binding IsSpeaking, Converter={converters:BoolToHeightRequestZeroOnTrue}}"
+                IsVisible="{Binding IsSpeaking, Converter={converters:InverseBoolConverter}}"/>
+        <Button FontFamily="FA-solid"
+                Text="{Static fa:IconFont.Stop}"
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                HeightRequest="{Binding IsSpeaking, Converter={converters:BoolToHeightRequestZeroOnFalse}}"
+                IsVisible="{Binding IsSpeaking}"
+                Clicked="TextToSpeechStop_Clicked"/>
+        <Label Text="Volume"
+               Grid.Row="0"
+               Grid.Column="1"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"
+               FontSize="Small"/>
+        <Slider Value="{Binding SpeechOptions.Volume}"
+                Grid.Row="0"
+                Grid.Column="2"
+                VerticalOptions="Center" 
+                HorizontalOptions="Fill"
+                Minimum="0"
+                Maximum="1"/>
+        <Label Text="Pitch"
+               Grid.Row="1"
+               Grid.Column="1"
+               VerticalOptions="Center"
+               HorizontalOptions="Start"
+               FontSize="Small"/>
+        <Slider Value="{Binding SpeechOptions.Pitch}"
                 Grid.Row="1"
-                FontAttributes="Bold"
-                FontSize="16"
-                LineBreakMode="NoWrap"
-                Text="{Binding Property.Price, StringFormat='{0:C0}'}" />
-            <Label
-                Grid.Row="2"
-                FontSize="16"
-                LineBreakMode="NoWrap"
-                Text="{Binding Property.Address}" />
-            <Grid Grid.Row="3"
-                  RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto">
-                <Label
-                    Grid.Column="0"
-                    FontSize="16"
-                    FontFamily="FA-solid"
-                    Text="{Static fa:IconFont.Bed}"
-                    VerticalOptions="Center" />
-                <Label
-                    Grid.Column="1"
-                    FontSize="16"
-                    Text="{Binding Property.Beds}" />
-                <Label
-                    Grid.Column="2"
-                    FontSize="16"
-                    FontFamily="FA-solid"
-                    Text="{Static fa:IconFont.Bath}"
-                    VerticalOptions="Center" />
-                <Label
-                    Grid.Column="3"
-                    FontSize="16"
-                    Text="{Binding Property.Baths}" />
-                <Label
-                    Grid.Column="4"
-                    FontSize="16"
-                    FontFamily="FA-solid"
-                    Text="{Static fa:IconFont.Parking}"
-                    VerticalOptions="Center" />
-                <Label
-                    Grid.Column="5"
-                    FontSize="16"
-                    Text="{Binding Property.Parking}" />
-            </Grid>
-            <Label
-                Grid.Row="4"
-                FontSize="14"
-                Text="{Binding Property.LandSize, StringFormat='Land size: {0} &#x33a1;'}" />
-            <Label
-                Grid.Row="5"
-                Margin="0,20,0,0"
-                FontAttributes="Bold"
-                FontSize="14"
-                Text="Description:" />
-            <Label
-                Grid.Row="6"
-                Margin="0,0,0,20"
-                FontSize="14"
-                Text="{Binding Property.Description}" />
-            <Label
-                Grid.Row="7"
-                FontAttributes="Bold"
-                FontSize="14"
-                Text="Listed by:" />
-            <Grid Grid.Row="8">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <Image
-                    Grid.Column="0"
-                    Source="{Binding Agent.ImageUrl}"
-                    VerticalOptions="Start"
-                    WidthRequest="100" />
-                <Grid Grid.Column="1"
-                      RowDefinitions="Auto,Auto,Auto">
-                    <Label
-                        Grid.Row="0"
-                        FontAttributes="Bold"
-                        FontSize="14"
-                        Text="{Binding Agent.Name}" />
-                    <Label
-                        Grid.Row="1"
-                        FontSize="12"
-                        Text="{Binding Agent.Email}" />
-                    <Label
-                        Grid.Row="2"
-                        FontSize="12"
-                        Text="{Binding Agent.Phone}" />
-                </Grid>
-            </Grid>
+                Grid.Column="2"
+                VerticalOptions="Center" 
+                HorizontalOptions="Fill"
+                Minimum="0"
+                Maximum="2"/>
+      </Grid>
+      <Label Grid.Row="8"
+             FontAttributes="Bold"
+             FontSize="14"
+             Text="Listed by:" />
+      <Grid Grid.Row="9">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Image Grid.Column="0"
+               Source="{Binding Agent.ImageUrl}"
+               VerticalOptions="Start"
+               WidthRequest="100" />
+        <Grid Grid.Column="1"
+              RowDefinitions="Auto,Auto,Auto">
+          <Label Grid.Row="0"
+                 FontAttributes="Bold"
+                 FontSize="14"
+                 Text="{Binding Agent.Name}" />
+          <Label Grid.Row="1"
+                 FontSize="12"
+                 Text="{Binding Agent.Email}" />
+          <Label Grid.Row="2"
+                 FontSize="12"
+                 Text="{Binding Agent.Phone}" />
         </Grid>
-    </ScrollView>
+      </Grid>
+    </Grid>
+  </ScrollView>
 </ContentPage>
+  
