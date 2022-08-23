@@ -52,6 +52,7 @@ namespace RealEstateApp.Views
     public Status Status { get; set; } = new Status();
     public Status BatteryStatus { get; set; } = new Status();
     public bool HasInternetConnection { get; set; }
+    public bool FlashlightIsOn { get; set; } = false;
     #endregion
 
     public AddEditPropertyPage(Property property = null)
@@ -241,6 +242,37 @@ namespace RealEstateApp.Views
       catch (FeatureNotSupportedException ex)
       {
         await DisplayAlert("Error", $"Feature not supported: {ex.Message}", "OK");
+      }
+      catch (Exception ex)
+      {
+        await DisplayAlert("Error", ex.Message, "OK");
+      }
+    }
+
+    private async void Flashlight_Clicked(object sender, System.EventArgs e)
+    {
+      try
+      {
+        HapticFeedback.Perform(HapticFeedbackType.Click); // Give haptic feedback when toggling light.
+
+        if (FlashlightIsOn)
+        {
+          await Flashlight.TurnOffAsync();
+          FlashlightIsOn = false;
+        }
+        else
+        {
+          await Flashlight.TurnOnAsync();
+          FlashlightIsOn = true;
+        }
+      }
+      catch (FeatureNotSupportedException ex)
+      {
+        await DisplayAlert("Error", $"Feature not supported: {ex.Message}", "OK");
+      }
+      catch (PermissionException ex)
+      {
+        await DisplayAlert("Error", $"Persmissions: {ex.Message}", "OK");
       }
       catch (Exception ex)
       {

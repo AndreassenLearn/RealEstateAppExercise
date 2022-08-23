@@ -17,6 +17,7 @@
 
   <ContentPage.Content>
     <StackLayout BackgroundColor="#E8E8E8">
+      <!--The following StackLayout with labels makes it possible to use two different fonts; one for the text and one for the icon.-->
       <StackLayout Orientation="Horizontal"
                    BackgroundColor="{Binding BatteryStatus.Color}"
                    IsVisible="{Binding BatteryStatus.Message, Converter={converters:StringBoolConverter}}">
@@ -176,6 +177,31 @@
                   ItemDisplayBinding="{Binding Name}"
                   ItemsSource="{Binding Agents}"
                   SelectedItem="{Binding SelectedAgent}" />
+
+          <Label FontSize="Medium" FontFamily="FA-solid" >
+            <Label.FormattedText>
+              <FormattedString>
+                <Span Text="{Static fa:IconFont.Cogs}"/>
+                <Span Text=" " />
+                <Span Text="Flashlight" />
+              </FormattedString>
+            </Label.FormattedText>
+          </Label>
+          <Button FontFamily="FA-solid"
+                  HeightRequest="100"
+                  WidthRequest="100"
+                  VerticalOptions="Center"
+                  HorizontalOptions="Center"
+                  Clicked="Flashlight_Clicked">
+            <Button.Triggers>
+              <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="false">
+                <Setter Property="Text" Value="{Static fa:IconFont.ToggleOff}" />
+              </DataTrigger>
+              <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="true">
+                <Setter Property="Text" Value="{Static fa:IconFont.ToggleOn}" />
+              </DataTrigger>
+            </Button.Triggers>
+          </Button>
         </StackLayout>
       </ScrollView>
     </StackLayout>
