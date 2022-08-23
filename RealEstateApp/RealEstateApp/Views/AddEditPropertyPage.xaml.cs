@@ -107,7 +107,10 @@ namespace RealEstateApp.Views
 
       HasInternetConnection = (Connectivity.NetworkAccess == NetworkAccess.Internet);
 
-      DisplayAlert("Attention", "No internet connection.", "OK");
+      if (!HasInternetConnection)
+      {
+        DisplayAlert("Attention", "No internet connection.", "OK");
+      }
     }
 
     private async void CancelSave_Clicked(object sender, System.EventArgs e)
