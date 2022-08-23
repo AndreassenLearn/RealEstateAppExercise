@@ -109,7 +109,8 @@ namespace RealEstateApp.Views
     {
       try
       {
-        var location = await Geolocation.GetLocationAsync();
+        var request = new GeolocationRequest(GeolocationAccuracy.High, TimeSpan.FromSeconds(10));
+        var location = await Geolocation.GetLocationAsync(request);
 
         if (location != null)
         {
