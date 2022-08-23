@@ -9,6 +9,9 @@
     <ResourceDictionary>
       <!--  Global Styles  -->
       <Color x:Key="NavigationPrimary">#2196F3</Color>
+      <Color x:Key="CriticalColor">#FF0000</Color>
+      <Color x:Key="WarningColor">#FFCC00</Color>
+      <Color x:Key="OkayColor">#33CC33</Color>
       <Color x:Key="WhiteColor">#FFFFFF</Color>
       <Color x:Key="LightGrayColor">#D3D3D3</Color>
       <Color x:Key="GrayColor">#808080</Color>

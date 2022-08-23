@@ -17,9 +17,23 @@
 
   <ContentPage.Content>
     <StackLayout BackgroundColor="#E8E8E8">
-      <Label BackgroundColor="{Binding StatusColor}"
-             IsVisible="{Binding StatusMessage, Converter={converters:StringBoolConverter}}"
-             Text="{Binding StatusMessage}" />
+      <StackLayout Orientation="Horizontal"
+                   BackgroundColor="{Binding BatteryStatus.Color}"
+                   IsVisible="{Binding BatteryStatus.Message, Converter={converters:StringBoolConverter}}">
+        <Label Text="{Binding BatteryStatus.Message}"
+               HorizontalOptions="EndAndExpand"
+               HorizontalTextAlignment="End" />
+        <Label FontFamily="FA-solid"
+               Text="{Binding BatteryStatus.Icon}"
+               HorizontalOptions="StartAndExpand"
+               HorizontalTextAlignment="Start" />
+      </StackLayout>
+      
+      <Label BackgroundColor="{Binding Status.Color}"
+             Margin="0"
+             IsVisible="{Binding Status.Message, Converter={converters:StringBoolConverter}}"
+             Text="{Binding Status.Message}"
+             HorizontalTextAlignment="Center" />
       <ScrollView VerticalOptions="FillAndExpand">
         <StackLayout Padding="15" Spacing="20">
 

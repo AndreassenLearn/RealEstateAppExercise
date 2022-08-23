@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using FontAwesome;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
 using System.Collections.ObjectModel;
@@ -35,7 +36,6 @@ namespace RealEstateApp.Views
     }
 
     private Agent _selectedAgent;
-
     public Agent SelectedAgent
     {
       get => _selectedAgent;
@@ -49,9 +49,8 @@ namespace RealEstateApp.Views
       }
     }
 
-    public string StatusMessage { get; set; }
-
-    public Color StatusColor { get; set; } = Color.White;
+    public Status Status { get; set; } = new Status();
+    public Status BatteryStatus { get; set; } = new Status();
     public bool HasInternetConnection { get; set; }
     #endregion
 
@@ -80,8 +79,8 @@ namespace RealEstateApp.Views
     {
       if (IsValid() == false)
       {
-        StatusMessage = "Please fill in all required fields";
-        StatusColor = Color.Red;
+        Status.Message = "Please fill in all required fields";
+        Status.Color = (Color)Application.Current.Resources["CriticalColor"];
 
         try
         {
@@ -122,6 +121,39 @@ namespace RealEstateApp.Views
     {
       base.OnAppearing();
 
+      // Check battery.
+      double chargeLevel = Battery.ChargeLevel;
+      if (chargeLevel < 0.2f)
+      {
+        switch (Battery.State)
+        {
+          case BatteryState.Charging:
+            if (Battery.EnergySaverStatus == EnergySaverStatus.On)
+            {
+              BatteryStatus.Color = (Color)Application.Current.Resources["OkayColor"];
+              BatteryStatus.Icon = IconFont.Leaf;
+            }
+            else
+            {
+              BatteryStatus.Color = (Color)Application.Current.Resources["WarningColor"];
+              BatteryStatus.Icon = "";
+            }
+            BatteryStatus.Message = $"Battery low: {chargeLevel * 100}% (Charging)";
+            break;
+          case BatteryState.Discharging:
+          case BatteryState.NotCharging:
+            BatteryStatus.Color = (Color)Application.Current.Resources["CriticalColor"];
+            BatteryStatus.Message = $"Battery low: {chargeLevel * 100}%";
+            BatteryStatus.Icon = "";
+            break;
+        }
+      }
+      else
+      {
+        BatteryStatus.Message = "";
+      }
+
+      // Check internet connection.
       HasInternetConnection = (Connectivity.NetworkAccess == NetworkAccess.Internet);
 
       if (!HasInternetConnection)

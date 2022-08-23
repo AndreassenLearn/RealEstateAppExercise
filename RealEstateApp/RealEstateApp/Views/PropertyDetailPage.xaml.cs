@@ -28,13 +28,6 @@ namespace RealEstateApp.Views
     public Property Property { get; set; }
     public SpeechOptions SpeechOptions { get; set; } = new SpeechOptions() { Volume = .5f, Pitch = 1.0f };
     public bool IsSpeaking { get; set; } = false;
-    //public bool IsSpeaking
-    //{
-    //  get
-    //  {
-    //    return cts?.IsCancellationRequested ?? true;
-    //  }
-    //}
 
     private CancellationTokenSource cts;
 
