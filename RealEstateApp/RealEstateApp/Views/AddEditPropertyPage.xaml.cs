@@ -82,6 +82,23 @@ namespace RealEstateApp.Views
       {
         StatusMessage = "Please fill in all required fields";
         StatusColor = Color.Red;
+
+        try
+        {
+          Vibration.Vibrate(TimeSpan.FromSeconds(1));
+
+          // As an alternative, the HapticFeedback class can be used to give feedback. However, the duration only as limited customizability.
+          //HapticFeedback.Perform(HapticFeedbackType.Click);
+          //HapticFeedback.Perform(HapticFeedbackType.LongPress);
+        }
+        catch (FeatureNotSupportedException ex)
+        {
+          await DisplayAlert("Error", $"Feature not supported: {ex.Message}", "OK");
+        }
+        catch (Exception ex)
+        {
+          await DisplayAlert("Error", ex.Message, "OK");
+        }
       }
       else
       {
@@ -111,6 +128,13 @@ namespace RealEstateApp.Views
       {
         DisplayAlert("Attention", "No internet connection.", "OK");
       }
+    }
+
+    protected override void OnDisappearing()
+    {
+      base.OnDisappearing();
+
+      Vibration.Cancel();
     }
 
     private async void CancelSave_Clicked(object sender, System.EventArgs e)
