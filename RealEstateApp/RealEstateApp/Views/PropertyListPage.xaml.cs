@@ -2,60 +2,84 @@
 using RealEstateApp.Services;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using TinyIoC;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace RealEstateApp.Views
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PropertyListPage : ContentPage
+  [XamlCompilation(XamlCompilationOptions.Compile)]
+  public partial class PropertyListPage : ContentPage
+  {
+    IRepository Repository;
+    public ObservableCollection<PropertyListItem> PropertiesCollection { get; private set; } = new ObservableCollection<PropertyListItem>();
+    public Location Location { get; set; }
+
+    public PropertyListPage()
     {
-        IRepository Repository;
-        public ObservableCollection<PropertyListItem> PropertiesCollection { get; } = new ObservableCollection<PropertyListItem>(); 
+      InitializeComponent();
 
-        public PropertyListPage()
-        {
-            InitializeComponent();
-
-            Repository = TinyIoCContainer.Current.Resolve<IRepository>();
-            LoadProperties();
-            BindingContext = this; 
-        }
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            LoadProperties();
-        }
-
-        void OnRefresh(object sender, EventArgs e)
-        {
-            var list = (ListView)sender;
-            LoadProperties();
-            list.IsRefreshing = false;
-        }
-
-        void LoadProperties()
-        {
-            PropertiesCollection.Clear();
-            var items = Repository.GetProperties();
-
-            foreach (Property item in items)
-            {
-                PropertiesCollection.Add(new PropertyListItem(item));
-            }
-        }
-
-        private async void ItemsListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            await Navigation.PushAsync(new PropertyDetailPage(e.Item as PropertyListItem));
-        }
-
-        private async void AddProperty_Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new AddEditPropertyPage());
-        }    
+      Repository = TinyIoCContainer.Current.Resolve<IRepository>();
+      LoadProperties();
+      BindingContext = this;
     }
+
+    protected override void OnAppearing()
+    {
+      base.OnAppearing();
+
+      LoadProperties();
+    }
+
+    void OnRefresh(object sender, EventArgs e)
+    {
+      var list = (ListView)sender;
+      LoadProperties();
+      list.IsRefreshing = false;
+    }
+
+    void LoadProperties()
+    {
+      PropertiesCollection.Clear();
+      var items = Repository.GetProperties();
+
+      foreach (Property item in items)
+      {
+        var property = new PropertyListItem(item);
+
+        if (Location != null && item.Latitude != null && item.Longitude != null)
+        {
+          property.Distance = Location.CalculateDistance((double)item.Latitude, (double)item.Longitude, Location, DistanceUnits.Kilometers);
+        }
+
+        PropertiesCollection.Add(property);
+      }
+    }
+
+    private async void ItemsListView_ItemTapped(object sender, ItemTappedEventArgs e)
+    {
+      await Navigation.PushAsync(new PropertyDetailPage(e.Item as PropertyListItem));
+    }
+
+    private async void AddProperty_Clicked(object sender, EventArgs e)
+    {
+      await Navigation.PushAsync(new AddEditPropertyPage());
+    }
+
+    private async void SortAsync(object sender, EventArgs e)
+    {
+      Location = await Geolocation.GetLastKnownLocationAsync();
+
+      if (Location == null)
+      {
+        Location = await Geolocation.GetLocationAsync(new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(5)));
+      }
+
+      LoadProperties();
+
+      PropertiesCollection = new ObservableCollection<PropertyListItem>(PropertiesCollection.OrderBy(property => property.Distance));
+    }
+  }
 }
