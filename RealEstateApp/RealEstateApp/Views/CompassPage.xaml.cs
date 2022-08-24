@@ -46,19 +46,19 @@ namespace RealEstateApp.Views
       CurrentHeading = e.Reading.HeadingMagneticNorth;
       RotationAngle = CurrentHeading * -1.0;
 
-      if (CurrentHeading < 360 + 45 && CurrentHeading >= 360 - 45)
+      if (CurrentHeading < 45 || CurrentHeading > 360 - 45)
       {
         CurrentAspect = "North";
       }
-      else if (CurrentHeading < 90 + 45 && CurrentHeading >= 90 - 45)
+      else if (CurrentHeading < 90 + 45 && CurrentHeading > 90 - 45)
       {
         CurrentAspect = "East";
       }
-      else if (CurrentHeading < 180 + 45 && CurrentHeading >= 180 - 45)
+      else if (CurrentHeading < 180 + 45 && CurrentHeading > 180 - 45)
       {
         CurrentAspect = "South";
       }
-      else if (CurrentHeading < 270 + 45 && CurrentHeading >= 270 - 45)
+      else if (CurrentHeading < 270 + 45 && CurrentHeading > 270 - 45)
       {
         CurrentAspect = "West";
       }
