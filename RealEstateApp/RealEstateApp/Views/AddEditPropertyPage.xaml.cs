@@ -123,6 +123,33 @@ namespace RealEstateApp.Views
       base.OnAppearing();
 
       // Check battery.
+      UpdateBattery();
+      Battery.BatteryInfoChanged += Battery_BatteryInfoChanged; // Subscribe to battery changes.
+
+      // Check internet connection.
+      HasInternetConnection = (Connectivity.NetworkAccess == NetworkAccess.Internet);
+
+      if (!HasInternetConnection)
+      {
+        DisplayAlert("Attention", "No internet connection.", "OK");
+      }
+    }
+
+    protected override void OnDisappearing()
+    {
+      base.OnDisappearing();
+
+      Vibration.Cancel();
+      Battery.BatteryInfoChanged -= Battery_BatteryInfoChanged; // Unsubscribe from battery changes.
+    }
+
+    private void Battery_BatteryInfoChanged(object sender, BatteryInfoChangedEventArgs e)
+    {
+      UpdateBattery();
+    }
+
+    private void UpdateBattery()
+    {
       double chargeLevel = Battery.ChargeLevel;
       if (chargeLevel < 0.2f)
       {
@@ -153,21 +180,6 @@ namespace RealEstateApp.Views
       {
         BatteryStatus.Message = "";
       }
-
-      // Check internet connection.
-      HasInternetConnection = (Connectivity.NetworkAccess == NetworkAccess.Internet);
-
-      if (!HasInternetConnection)
-      {
-        DisplayAlert("Attention", "No internet connection.", "OK");
-      }
-    }
-
-    protected override void OnDisappearing()
-    {
-      base.OnDisappearing();
-
-      Vibration.Cancel();
     }
 
     private async void CancelSave_Clicked(object sender, System.EventArgs e)
