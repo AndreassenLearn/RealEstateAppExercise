@@ -83,6 +83,27 @@
           <Label FontSize="Medium" FontFamily="FA-solid">
             <Label.FormattedText>
               <FormattedString>
+                <Span Text="{Static fa:IconFont.Compass}"/>
+                <Span Text=" " />
+                <Span Text="Aspect" />
+              </FormattedString>
+            </Label.FormattedText>
+          </Label>
+          <Grid ColumnDefinitions="5*, 1*">
+            <Entry FontSize="Medium"
+                   Text="{Binding Property.CompassInformation.Aspect, Mode=OneWay}" 
+                   IsReadOnly="True" />
+            <Button FontFamily="FA-solid"
+                    Text="{Static fa:IconFont.DraftingCompass}"
+                    Grid.Column="1"
+                    VerticalOptions="Center"
+                    IsEnabled="{Binding HasInternetConnection}"
+                    Clicked="AspectButton_Clicked"/>
+          </Grid>
+
+          <Label FontSize="Medium" FontFamily="FA-solid">
+            <Label.FormattedText>
+              <FormattedString>
                 <Span Text="{Static fa:IconFont.Tag}"/>
                 <Span Text=" " />
                 <Span Text="Price" />
@@ -203,13 +224,13 @@
                 </DataTrigger>
               </Button.Triggers>
             </Button>
-            <Button FontFamily="FA-solid"
+            <!--<Button FontFamily="FA-solid"
                     Text="{Static fa:IconFont.DraftingCompass}"
                     HeightRequest="100"
                     WidthRequest="100"
                     VerticalOptions="Center"
                     HorizontalOptions="Center"
-                    Clicked="Compass_Clicked"/>
+                    Clicked="Compass_Clicked"/>-->
           </StackLayout>
         </StackLayout>
       </ScrollView>

@@ -9,6 +9,7 @@ using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CompassData = RealEstateApp.Models.CompassInformation;
 
 namespace RealEstateApp.Views
 {
@@ -53,6 +54,7 @@ namespace RealEstateApp.Views
     public Status BatteryStatus { get; set; } = new Status();
     public bool HasInternetConnection { get; set; }
     public bool FlashlightIsOn { get; set; } = false;
+    public CompassInformation CompassInformation { get; set; }
     #endregion
 
     public AddEditPropertyPage(Property property = null)
@@ -292,9 +294,9 @@ namespace RealEstateApp.Views
       }
     }
 
-    private async void Compass_Clicked(object sender, System.EventArgs e)
+    private async void AspectButton_Clicked(object sender, System.EventArgs e)
     {
-      await DisplayAlert("Error", "Compass", "OK");
+      await Navigation.PushAsync(new CompassPage(Property.CompassInformation));
     }
   }
 }

@@ -1,4 +1,5 @@
 ﻿using PropertyChanged;
+using RealEstateApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,13 @@ namespace RealEstateApp.Views
     public double RotationAngle { get; set; }
     public double CurrentHeading { get; set; }
 
-    public CompassPage()
+    private CompassInformation _info;
+
+    public CompassPage(CompassInformation info)
     {
       InitializeComponent();
+
+      _info = info;
 
       this.BindingContext = this;
     }
@@ -94,6 +99,12 @@ namespace RealEstateApp.Views
       {
         await DisplayAlert("Error", ex.Message, "OK");
       }
+    }
+
+    private async void Close(object sender, EventArgs e)
+    {
+      _info.Aspect = CurrentAspect;
+      await Navigation.PopAsync();
     }
   }
 }
