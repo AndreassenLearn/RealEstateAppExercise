@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:RealEstateApp.Models"
+             x:Class="RealEstateApp.Views.HeightCalculatorPage">
+  <ContentPage.Content>
+    <StackLayout Orientation="Vertical"
+                 Margin="20">
+      <Label FontSize="Medium"
+             HorizontalOptions="Center">
+        <Label.FormattedText>
+          <FormattedString>
+            <Span Text="Current Altitude " />
+            <Span Text="{Binding CurrentAltitude, StringFormat='{0:N2}'}"/>
+            <Span Text=" m" />
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+      <Entry Text="{Binding CurrentBarometerMeasurement.Label}"/>
+      <Button Text="Save"
+              Clicked="SaveButton_Clicked"/>
+      <ListView ItemsSource="{Binding BarometerMeasurements}"
+                CachingStrategy="RecycleElement">
+        <ListView.ItemTemplate>
+          <DataTemplate x:DataType="models:BarometerMeasurement">
+            <ViewCell>
+              <Grid RowDefinitions="*"
+                    Margin="5">
+                <Label Text="{Binding Display}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Start"/>
+              </Grid>
+            </ViewCell>
+          </DataTemplate>
+        </ListView.ItemTemplate>
+      </ListView>
+
+      <Button Text="Calibrate"
+              VerticalOptions="EndAndExpand"
+              Clicked="CalibrateButton_Clicked"/>
+      <Label FontSize="Small"
+             VerticalOptions="EndAndExpand"
+             HorizontalOptions="Center">
+        <Label.FormattedText>
+          <FormattedString>
+            <Span Text="Current Pressure " />
+            <Span Text="{Binding CurrentPressure, StringFormat='{0:N2}'}"/>
+            <Span Text=" hPa" />
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+      <Label FontSize="Micro"
+             VerticalOptions="EndAndExpand"
+             HorizontalOptions="Center">
+        <Label.FormattedText>
+          <FormattedString>
+            <Span Text="Sea Level Pressure " />
+            <Span Text="{Binding SeaLevelPressure, StringFormat='{0:N2}'}"/>
+            <Span Text=" hPa" />
+          </FormattedString>
+        </Label.FormattedText>
+      </Label>
+    </StackLayout>
+  </ContentPage.Content>
+</ContentPage>
+  

@@ -4,7 +4,7 @@
              xmlns:fa="clr-namespace:FontAwesome"
              x:Class="RealEstateApp.Views.CompassPage">
   <ContentPage.Content>
-    <StackLayout>
+    <StackLayout Margin="20">
       <Grid RowDefinitions="Auto,*,Auto,Auto" ColumnDefinitions="*" >
         <Label FontSize="Large" FontFamily="FA-solid" Margin="0,20" HorizontalOptions="Center">
           <Label.FormattedText>

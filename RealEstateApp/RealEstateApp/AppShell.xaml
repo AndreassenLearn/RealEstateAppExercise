@@ -12,6 +12,13 @@
                        Color="Black"/>
     </ShellContent.Icon>
   </ShellContent>
+  <ShellContent Title="Altitude" ContentTemplate="{DataTemplate views:HeightCalculatorPage}">
+    <ShellContent.Icon>
+      <FontImageSource FontFamily="FA-solid"
+                       Glyph="{x:Static fa:IconFont.Mountain}"
+                       Color="Black"/>
+    </ShellContent.Icon>
+  </ShellContent>
   <ShellContent Title="About" ContentTemplate="{DataTemplate views:AboutPage}">
     <ShellContent.Icon>
       <FontImageSource FontFamily="FA-solid"
