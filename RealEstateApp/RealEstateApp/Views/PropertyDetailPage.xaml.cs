@@ -36,6 +36,11 @@ namespace RealEstateApp.Views
       await Navigation.PushAsync(new AddEditPropertyPage(Property));
     }
 
+    private async void MainImage_Tapped(object sender, System.EventArgs e)
+    {
+      await Navigation.PushAsync(new ImageListPage(Property));
+    }
+
     private async void TextToSpeechPlay_Clicked(object sender, System.EventArgs e)
     {
       cts = new CancellationTokenSource();
