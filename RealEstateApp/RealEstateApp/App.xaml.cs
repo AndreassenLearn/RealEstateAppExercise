@@ -1,5 +1,6 @@
 ﻿using RealEstateApp.Services;
 using RealEstateApp.Services.Repository;
+using RealEstateApp.Views;
 using TinyIoC;
 using Xamarin.Forms;
 
@@ -14,7 +15,8 @@ namespace RealEstateApp
             var container = TinyIoCContainer.Current;
             container.Register<IRepository, MockRepository>();
 
-            MainPage = new AppShell();
+            //MainPage = new AppShell();
+            MainPage = new CompassPage();
         }
 
 

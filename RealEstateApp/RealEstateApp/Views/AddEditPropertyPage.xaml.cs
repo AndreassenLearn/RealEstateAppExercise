@@ -291,5 +291,10 @@ namespace RealEstateApp.Views
         await DisplayAlert("Error", ex.Message, "OK");
       }
     }
+
+    private async void Compass_Clicked(object sender, System.EventArgs e)
+    {
+      await DisplayAlert("Error", "Compass", "OK");
+    }
   }
 }

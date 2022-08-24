@@ -187,21 +187,30 @@
               </FormattedString>
             </Label.FormattedText>
           </Label>
-          <Button FontFamily="FA-solid"
-                  HeightRequest="100"
-                  WidthRequest="100"
-                  VerticalOptions="Center"
-                  HorizontalOptions="Center"
-                  Clicked="Flashlight_Clicked">
-            <Button.Triggers>
-              <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="false">
-                <Setter Property="Text" Value="{Static fa:IconFont.ToggleOff}" />
-              </DataTrigger>
-              <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="true">
-                <Setter Property="Text" Value="{Static fa:IconFont.ToggleOn}" />
-              </DataTrigger>
-            </Button.Triggers>
-          </Button>
+          <StackLayout Orientation="Horizontal">
+            <Button FontFamily="FA-solid"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Clicked="Flashlight_Clicked">
+              <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="false">
+                  <Setter Property="Text" Value="{Static fa:IconFont.ToggleOff}" />
+                </DataTrigger>
+                <DataTrigger TargetType="Button" Binding="{Binding FlashlightIsOn}" Value="true">
+                  <Setter Property="Text" Value="{Static fa:IconFont.ToggleOn}" />
+                </DataTrigger>
+              </Button.Triggers>
+            </Button>
+            <Button FontFamily="FA-solid"
+                    Text="{Static fa:IconFont.DraftingCompass}"
+                    HeightRequest="100"
+                    WidthRequest="100"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"
+                    Clicked="Compass_Clicked"/>
+          </StackLayout>
         </StackLayout>
       </ScrollView>
     </StackLayout>
