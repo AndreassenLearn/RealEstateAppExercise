@@ -15,6 +15,9 @@ namespace RealEstateApp.Views
   {
     public Property Property { get; set; }
     public int Position { get; set; }
+    public float AccerlerationAxisX { get; set; }
+    public float AccerlerationAxisY { get; set; }
+    public float AccerlerationAxisZ { get; set; }
 
     public ImageListPage(Property property)
     {
@@ -29,6 +32,7 @@ namespace RealEstateApp.Views
     {
       base.OnAppearing();
 
+      Accelerometer.ReadingChanged += Accelerometer_ReadingChanged;
       Accelerometer.ShakeDetected += Accelerometer_ShakeDetected;
       StartAccelerometer();
     }
@@ -37,8 +41,16 @@ namespace RealEstateApp.Views
     {
       base.OnDisappearing();
 
+      Accelerometer.ReadingChanged -= Accelerometer_ReadingChanged;
       Accelerometer.ShakeDetected -= Accelerometer_ShakeDetected;
       StopAccelerometer();
+    }
+
+    private void Accelerometer_ReadingChanged(object sender, AccelerometerChangedEventArgs e)
+    {
+      AccerlerationAxisX = e.Reading.Acceleration.X;
+      AccerlerationAxisY = e.Reading.Acceleration.Y;
+      AccerlerationAxisZ = e.Reading.Acceleration.Z;
     }
 
     private void AdvanceCarousel(bool reverse = false)
