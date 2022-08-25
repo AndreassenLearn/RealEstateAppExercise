@@ -1,4 +1,5 @@
-﻿using RealEstateApp.Models;
+﻿using Newtonsoft.Json;
+using RealEstateApp.Models;
 using RealEstateApp.Services;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static System.Net.Mime.MediaTypeNames;
 using static Xamarin.Essentials.AppleSignInAuthenticator;
 
 namespace RealEstateApp.Views
@@ -185,6 +187,30 @@ namespace RealEstateApp.Views
     private async void ContractButton_Clicked(object sender, EventArgs e)
     {
       await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(Property.ContractFilePath) });
+    }
+
+    private async void ShareButton_Clicked(object sender, EventArgs e)
+    {
+      await Share.RequestAsync(new ShareTextRequest
+      {
+        Title = "Share Property",
+        Subject = "A property you may be interested in",
+        Text = $"{Property.Address} - Price: {Property.Price?.ToString("C")}, Beds: {Property.Beds}",
+        Uri = Property.NeighbourhoodUrl
+      });
+    }
+
+    private async void ShareFileButton_Clicked(object sender, EventArgs e)
+    {
+      await Share.RequestAsync(new ShareFileRequest
+      {
+        File = new ShareFile(Property.ContractFilePath)
+      });
+    }
+
+    private async void ClipboardButton_Clicked(object sender, EventArgs e)
+    {
+      await Clipboard.SetTextAsync(JsonConvert.SerializeObject(Property));
     }
   }
 }

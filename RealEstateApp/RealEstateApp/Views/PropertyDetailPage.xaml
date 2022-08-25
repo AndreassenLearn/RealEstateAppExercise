@@ -14,7 +14,7 @@
   </ContentPage.ToolbarItems>
 
   <ScrollView VerticalOptions="FillAndExpand">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
           Padding="15">
       <Image Grid.Row="0"
              Margin="-10,-10,-10,0"
@@ -221,8 +221,42 @@
       <Label Grid.Row="12"
              FontAttributes="Bold"
              FontSize="14"
-             Text="Listed by:" />
+             Text="Share:" />
       <Grid Grid.Row="13"
+            ColumnDefinitions="*, Auto"
+            RowDefinitions="Auto">
+        <Label Text="Text"
+               VerticalOptions="Center"/>
+        <Button Grid.Column="1"
+                FontFamily="FA-solid"
+                Text="{Static fa:IconFont.ShareAlt}"
+                VerticalOptions="Center"
+                Clicked="ShareButton_Clicked"/>
+        <Label Text="File"
+               Grid.Row="1"
+               VerticalOptions="Center"/>
+        <Button Grid.Column="1"
+                Grid.Row="1"
+                FontFamily="FA-solid"
+                Text="{Static fa:IconFont.ShareSquare}"
+                VerticalOptions="Center"
+                Clicked="ShareFileButton_Clicked"/>
+        <Label Text="Clipboard"
+               Grid.Row="2"
+               VerticalOptions="Center"/>
+        <Button Grid.Column="1"
+                Grid.Row="2"
+                FontFamily="FA-solid"
+                Text="{Static fa:IconFont.Clipboard}"
+                VerticalOptions="Center"
+                Clicked="ClipboardButton_Clicked"/>
+      </Grid>
+
+      <Label Grid.Row="14"
+             FontAttributes="Bold"
+             FontSize="14"
+             Text="Listed by:" />
+      <Grid Grid.Row="15"
             ColumnDefinitions="Auto, *"
             RowDefinitions="Auto">
         <Image Grid.Column="0"
