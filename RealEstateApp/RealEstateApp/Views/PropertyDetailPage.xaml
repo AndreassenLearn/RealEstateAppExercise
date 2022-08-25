@@ -14,7 +14,7 @@
   </ContentPage.ToolbarItems>
 
   <ScrollView VerticalOptions="FillAndExpand">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
           Padding="15">
       <Image Grid.Row="0"
              Margin="-10,-10,-10,0"
@@ -175,15 +175,38 @@
           </Label.GestureRecognizers>
         </Label>
       </StackLayout>
+      
       <Label Grid.Row="10"
              FontAttributes="Bold"
              FontSize="14"
+             Text="Location:" />
+      <Grid Grid.Row="11"
+            ColumnDefinitions="*, Auto, Auto"
+            RowDefinitions="auto">
+        <Label Text="Open in maps"
+               VerticalOptions="Center"
+               HorizontalOptions="StartAndExpand"/>
+        <Button Grid.Column="1"
+                FontFamily="FA-solid"
+                Text="{Static fa:IconFont.MapMarkedAlt}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                Clicked="MapsButton_Clicked"/>
+        <Button Grid.Column="2"
+                FontFamily="FA-solid"
+                Text="{Static fa:IconFont.Directions}"
+                VerticalOptions="Center"
+                HorizontalOptions="End"
+                Clicked="MapsDirectionButton_Clicked"/>
+      </Grid>
+
+      <Label Grid.Row="12"
+             FontAttributes="Bold"
+             FontSize="14"
              Text="Listed by:" />
-      <Grid Grid.Row="11">
-        <Grid.ColumnDefinitions>
-          <ColumnDefinition Width="Auto" />
-          <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+      <Grid Grid.Row="13"
+            ColumnDefinitions="Auto, *"
+            RowDefinitions="Auto">
         <Image Grid.Column="0"
                Source="{Binding Agent.ImageUrl}"
                VerticalOptions="Start"

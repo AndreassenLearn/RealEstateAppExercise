@@ -124,5 +124,36 @@ namespace RealEstateApp.Views
         await DisplayAlert("Error", ex.Message, "OK");
       }
     }
+
+    private void MapsButton_Clicked(object sender, EventArgs e)
+    {
+      OpenMaps(new MapLaunchOptions { Name = Property.Address });
+    }
+
+    private void MapsDirectionButton_Clicked(object sender, EventArgs e)
+    {
+      OpenMaps(new MapLaunchOptions { Name = Property.Address, NavigationMode = NavigationMode.Default });
+    }
+
+    private async void OpenMaps(MapLaunchOptions options)
+    {
+      if (Property.Latitude != null && Property.Longitude != null)
+      {
+        var location = new Location((double)Property.Latitude, (double)Property.Longitude);
+        
+        try
+        {
+          await Map.OpenAsync(location, options);
+        }
+        catch (Exception ex)
+        {
+          await DisplayAlert("Error", ex.Message, "OK");
+        }
+      }
+      else
+      {
+        await DisplayAlert("Error", "Couldn't read coordinates.", "OK");
+      }
+    }
   }
 }
