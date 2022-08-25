@@ -14,7 +14,7 @@
   </ContentPage.ToolbarItems>
 
   <ScrollView VerticalOptions="FillAndExpand">
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" 
           Padding="15">
       <Image Grid.Row="0"
              Margin="-10,-10,-10,0"
@@ -129,8 +129,57 @@
       <Label Grid.Row="8"
              FontAttributes="Bold"
              FontSize="14"
+             Text="Vendor:" />
+      <StackLayout Grid.Row="9"
+                   Orientation="Vertical">
+        <Label>
+          <Label.FormattedText>
+            <FormattedString>
+              <Span FontFamily="FA-solid"
+                    Text="{Static fa:IconFont.User}"/>
+              <Span Text=" " />
+              <Span Text="{Binding Property.Vendor.FullName}"/>
+            </FormattedString>
+          </Label.FormattedText>
+        </Label>
+        <Label>
+          <Label.FormattedText>
+            <FormattedString>
+              <Span FontFamily="FA-solid"
+                    Text="{Static fa:IconFont.MailBulk}"/>
+              <Span Text=" " />
+              <Span Text="{Binding Property.Vendor.Email}"
+                    TextColor="Blue"/>
+            </FormattedString>
+          </Label.FormattedText>
+          <Label.GestureRecognizers>
+            <TapGestureRecognizer
+                Tapped="VendorEmail_Tapped"
+                NumberOfTapsRequired="1" />
+          </Label.GestureRecognizers>
+        </Label>
+        <Label>
+          <Label.FormattedText>
+            <FormattedString>
+              <Span FontFamily="FA-solid"
+                    Text="{Static fa:IconFont.Phone}"/>
+              <Span Text=" " />
+              <Span Text="{Binding Property.Vendor.Phone}"
+                    TextColor="Blue"/>
+            </FormattedString>
+          </Label.FormattedText>
+          <Label.GestureRecognizers>
+            <TapGestureRecognizer
+                Tapped="VendorPhone_Tapped"
+                NumberOfTapsRequired="1" />
+          </Label.GestureRecognizers>
+        </Label>
+      </StackLayout>
+      <Label Grid.Row="10"
+             FontAttributes="Bold"
+             FontSize="14"
              Text="Listed by:" />
-      <Grid Grid.Row="9">
+      <Grid Grid.Row="11">
         <Grid.ColumnDefinitions>
           <ColumnDefinition Width="Auto" />
           <ColumnDefinition Width="*" />
