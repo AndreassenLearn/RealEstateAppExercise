@@ -1,48 +1,66 @@
 ﻿using RealEstateApp.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using Xamarin.Essentials;
 
 namespace RealEstateApp.Services.Repository
 {
-    public class MockRepository : IRepository
+  public class MockRepository : IRepository
+  {
+    private List<Agent> _agents;
+    private List<Property> _properties;
+    private string _contractFilePath;
+
+    public MockRepository()
     {
-        private List<Agent> _agents;
-        private List<Property> _properties;
+      LoadFiles();
+      LoadProperties();
+      LoadAgents();
+    }
 
-        public MockRepository()
+    public List<Agent> GetAgents()
+    {
+      return _agents;
+    }
+
+    public List<Property> GetProperties()
+    {
+      return _properties;
+    }
+
+    public void SaveProperty(Property property)
+    {
+      if (property.Id == null) throw new NullReferenceException("Property.Id cannot be null");
+
+      var existing = _properties.FirstOrDefault(x => x.Id == property.Id);
+
+      if (existing == null)
+      {
+        _properties.Add(property);
+      }
+      else
+      {
+        var existingIndex = _properties.IndexOf(existing);
+
+        _properties[existingIndex] = property;
+      }
+    }
+
+    private async void LoadFiles()
+    {
+      var fileName = "contract.pdf";
+      var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+      _contractFilePath = Path.Combine(folderPath, fileName);
+      using (var stream = await FileSystem.OpenAppPackageFileAsync(fileName))
+      {
+        using (var fileStream = File.Create(_contractFilePath))
         {
-            LoadProperties();
-            LoadAgents();
+          stream.CopyTo(fileStream);
         }
-
-        public List<Agent> GetAgents()
-        {
-            return _agents;
-        }
-
-        public List<Property> GetProperties()
-        {
-            return _properties;
-        }
-
-        public void SaveProperty(Property property)
-        {
-            if (property.Id == null) throw new NullReferenceException("Property.Id cannot be null");
-
-            var existing = _properties.FirstOrDefault(x => x.Id == property.Id);
-
-            if (existing == null)
-            {
-                _properties.Add(property);
-            }
-            else
-            {
-                var existingIndex = _properties.IndexOf(existing);
-
-                _properties[existingIndex] = property;
-            }
-        }
+      }
+    }
 
     private void LoadProperties()
     {
@@ -69,8 +87,8 @@ namespace RealEstateApp.Services.Repository
               Email = "wgrant@pluralsight.com",
               Phone = "+61423555712"
           },
-          //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-          //ContractFilePath = _contractFilePath,
+          NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+          ContractFilePath = _contractFilePath,
           CompassInformation = new CompassInformation
           {
             Aspect = "North"
@@ -91,8 +109,8 @@ namespace RealEstateApp.Services.Repository
               Email = "acooper@pluralsight.com",
               Phone = "+61290014312"
           },
-          //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-          //ContractFilePath = _contractFilePath,
+          NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+          ContractFilePath = _contractFilePath,
           CompassInformation = new CompassInformation
           {
             Aspect = "East"
@@ -112,8 +130,8 @@ namespace RealEstateApp.Services.Repository
               Email = "mpickering@pluralsight.com",
               Phone = "0429008145"
           },
-          //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-          //ContractFilePath = _contractFilePath,
+          NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+          ContractFilePath = _contractFilePath,
           CompassInformation = new CompassInformation
           {
             Aspect = "South"
@@ -134,8 +152,8 @@ namespace RealEstateApp.Services.Repository
               Email = "sbyron@pluralsight.com",
               Phone = "02 8090 6412"
           },
-          //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-          //ContractFilePath = _contractFilePath,
+          NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+          ContractFilePath = _contractFilePath,
           CompassInformation = new CompassInformation
           {
             Aspect = "North"
@@ -155,8 +173,8 @@ namespace RealEstateApp.Services.Repository
               Email = "joaks@pluralsight.com",
               Phone = "90541823"
           },
-          //NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
-          //ContractFilePath = _contractFilePath,
+          NeighbourhoodUrl = "https://en.wikipedia.org/wiki/Collaroy,_New_South_Wales",
+          ContractFilePath = _contractFilePath,
           CompassInformation = new CompassInformation
           {
             Aspect = "West"
@@ -166,36 +184,36 @@ namespace RealEstateApp.Services.Repository
     }
 
     private void LoadAgents()
-        {
-            _agents = new List<Agent>
-            {
-                new Agent
-                {
-                    Id = "agent_2",
-                    Email = "sarah@realestate.com",
-                    Name = "Sarah Brown",
-                    Phone = "555 675 1456",
-                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_2.png"
-                },
-                new Agent
-                {
-                    Id = "agent_1",
-                    Email = "bob@realestate.com",
-                    Name = "Bob Smith",
-                    Phone = "555 123 1234",
-                    ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
-                }
-            };
-        }
-
-        private List<string> GetPropertyImageUrls(int index)
-        {
-            return new List<string>
-            {
-                $"{GlobalSettings.Instance.ImageBaseUrl}house_{index}.jpg",
-                $"{GlobalSettings.Instance.ImageBaseUrl}kitchen_{index}.jpg",
-                $"{GlobalSettings.Instance.ImageBaseUrl}bed_{index}.jpg"
-            };
-        }
+    {
+      _agents = new List<Agent>
+      {
+          new Agent
+          {
+              Id = "agent_2",
+              Email = "sarah@realestate.com",
+              Name = "Sarah Brown",
+              Phone = "555 675 1456",
+              ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_2.png"
+          },
+          new Agent
+          {
+              Id = "agent_1",
+              Email = "bob@realestate.com",
+              Name = "Bob Smith",
+              Phone = "555 123 1234",
+              ImageUrl = $"{GlobalSettings.Instance.ImageBaseUrl}agent_1.png"
+          }
+      };
     }
+
+    private List<string> GetPropertyImageUrls(int index)
+    {
+      return new List<string>
+      {
+          $"{GlobalSettings.Instance.ImageBaseUrl}house_{index}.jpg",
+          $"{GlobalSettings.Instance.ImageBaseUrl}kitchen_{index}.jpg",
+          $"{GlobalSettings.Instance.ImageBaseUrl}bed_{index}.jpg"
+      };
+    }
+  }
 }

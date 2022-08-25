@@ -31,8 +31,10 @@ namespace RealEstateApp.Models
     public List<string> ImageUrls { get; set; }
     public double? Latitude { get; set; }
     public double? Longitude { get; set; }
-    public CompassInformation CompassInformation { get; set; } = new CompassInformation();
     public Vendor Vendor { get; set; }
+    public string NeighbourhoodUrl { get; set; }
+    public string ContractFilePath { get; set; }
+    public CompassInformation CompassInformation { get; set; } = new CompassInformation();
 
     public string MainImageUrl => ImageUrls?.FirstOrDefault() ?? GlobalSettings.Instance.NoImageUrl;
   }

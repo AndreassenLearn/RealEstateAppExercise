@@ -2,6 +2,7 @@
 using RealEstateApp.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -9,6 +10,7 @@ using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using static Xamarin.Essentials.AppleSignInAuthenticator;
 
 namespace RealEstateApp.Views
 {
@@ -154,6 +156,35 @@ namespace RealEstateApp.Views
       {
         await DisplayAlert("Error", "Couldn't read coordinates.", "OK");
       }
+    }
+
+    private async void NeighbourhoodButton_Clicked(object sender, EventArgs e)
+    {
+      try
+      {
+        await Browser.OpenAsync(Property.NeighbourhoodUrl, BrowserLaunchMode.SystemPreferred);
+      }
+      catch (Exception ex)
+      {
+        await DisplayAlert("Error", ex.Message, "OK");
+      }
+    }
+
+    private async void NeighbourhoodExternalButton_Clicked(object sender, EventArgs e)
+    {
+      try
+      {
+        await Browser.OpenAsync(Property.NeighbourhoodUrl, BrowserLaunchMode.External);
+      }
+      catch (Exception ex)
+      {
+        await DisplayAlert("Error", ex.Message, "OK");
+      }
+    }
+
+    private async void ContractButton_Clicked(object sender, EventArgs e)
+    {
+      await Launcher.OpenAsync(new OpenFileRequest { File = new ReadOnlyFile(Property.ContractFilePath) });
     }
   }
 }
