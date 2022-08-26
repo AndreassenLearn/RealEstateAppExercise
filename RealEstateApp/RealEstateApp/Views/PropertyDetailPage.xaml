@@ -106,6 +106,7 @@
                HorizontalOptions="Start"
                FontSize="Small"/>
         <Slider Value="{Binding SpeechOptions.Volume}"
+                ValueChanged="VolumeSlider_ValueChanged"
                 Grid.Row="0"
                 Grid.Column="2"
                 VerticalOptions="Center" 
@@ -119,6 +120,7 @@
                HorizontalOptions="Start"
                FontSize="Small"/>
         <Slider Value="{Binding SpeechOptions.Pitch}"
+                ValueChanged="PitchSlider_ValueChanged"
                 Grid.Row="1"
                 Grid.Column="2"
                 VerticalOptions="Center" 

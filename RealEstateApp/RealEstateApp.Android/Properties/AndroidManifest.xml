@@ -15,4 +15,7 @@
 			<data android:scheme="smsto"/>
 		</intent>
 	</queries>
+  <!--<application android:allowBackup="false" android:debuggable="true">
+    
+  </application>-->
 </manifest>

@@ -34,10 +34,12 @@ namespace RealEstateApp.Views
 
     public Agent Agent { get; set; }
     public Property Property { get; set; }
-    public SpeechOptions SpeechOptions { get; set; } = new SpeechOptions() { Volume = .5f, Pitch = 1.0f };
+    public SpeechOptions SpeechOptions { get; set; } = new SpeechOptions() { Volume = Preferences.Get(_PREFERENCE_VOLUME, .5f), Pitch = Preferences.Get(_PREFERENCE_PITCH, 1.0f) };
     public bool IsSpeaking { get; set; } = false;
 
     private CancellationTokenSource cts;
+    private const string _PREFERENCE_VOLUME = "volume";
+    private const string _PREFERENCE_PITCH = "pitch";
 
     private async void EditProperty_Clicked(object sender, System.EventArgs e)
     {
@@ -66,6 +68,16 @@ namespace RealEstateApp.Views
 
       IsSpeaking = false;
       cts.Cancel();
+    }
+
+    private void VolumeSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+    {
+      Preferences.Set(_PREFERENCE_VOLUME, (float)e.NewValue);
+    }
+
+    private void PitchSlider_ValueChanged(object sender, ValueChangedEventArgs e)
+    {
+      Preferences.Set(_PREFERENCE_PITCH, (float)e.NewValue);
     }
 
     private async void VendorEmail_Tapped(object sender, System.EventArgs e)
