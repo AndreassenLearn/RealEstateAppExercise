@@ -53,11 +53,12 @@ namespace RealEstateApp.Services.Repository
       var fileName = "contract.pdf";
       var folderPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
       _contractFilePath = Path.Combine(folderPath, fileName);
+
       using (var stream = await FileSystem.OpenAppPackageFileAsync(fileName))
       {
         using (var fileStream = File.Create(_contractFilePath))
         {
-          stream.CopyTo(fileStream);
+          await stream.CopyToAsync(fileStream);
         }
       }
     }

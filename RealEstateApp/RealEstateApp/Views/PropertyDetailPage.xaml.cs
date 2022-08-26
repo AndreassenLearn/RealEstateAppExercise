@@ -7,6 +7,7 @@ using System.Diagnostics.Contracts;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using TinyIoC;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -129,17 +130,17 @@ namespace RealEstateApp.Views
       }
     }
 
-    private void MapsButton_Clicked(object sender, EventArgs e)
+    private async void MapsButton_Clicked(object sender, EventArgs e)
     {
-      OpenMaps(new MapLaunchOptions { Name = Property.Address });
+      await Task.Run(() => OpenMaps(new MapLaunchOptions { Name = Property.Address }));
     }
 
-    private void MapsDirectionButton_Clicked(object sender, EventArgs e)
+    private async void MapsDirectionButton_Clicked(object sender, EventArgs e)
     {
-      OpenMaps(new MapLaunchOptions { Name = Property.Address, NavigationMode = NavigationMode.Default });
+      await Task.Run(() => OpenMaps(new MapLaunchOptions { Name = Property.Address, NavigationMode = NavigationMode.Default }));
     }
 
-    private async void OpenMaps(MapLaunchOptions options)
+    private async Task OpenMaps(MapLaunchOptions options)
     {
       if (Property.Latitude != null && Property.Longitude != null)
       {
